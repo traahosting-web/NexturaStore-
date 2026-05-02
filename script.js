@@ -322,8 +322,8 @@ if (!path.includes('login.html') && !path.includes('register.html')) {
 
     const mods = [
         { id: 101, name: "Alight motion mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "#", img: "am.jpg" },
-        { id: 101, name: "Wink mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "https://sfl.gl/DqVLGXa6", img: "wink.jpg" },
-        { id: 102, name: "PicsArt Pro MOD", price: "GRATIS", desc: "Gold Unlocked, No Ads.", link: "#", img: "picsart.jpg" }
+        { id: 102, name: "Wink mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "https://sfl.gl/DqVLGXa6", img: "wink.jpg" },
+        { id: 103, name: "PicsArt Pro MOD", price: "GRATIS", desc: "Gold Unlocked, No Ads.", link: "#", img: "picsart.jpg" }
     ];
 
     const testimonials = [
