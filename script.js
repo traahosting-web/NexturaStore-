@@ -7,8 +7,10 @@ import {
     onAuthStateChanged, 
     signOut, 
     sendPasswordResetEmail, 
-    fetchSignInMethodsForEmail, 
-} from './firebase.js'; // Pastikan path firebase sesuai
+    fetchSignInMethodsForEmail,
+    sendEmailVerification // 👈 Tambahkan ini
+} from './firebase.js';
+
 
 // ========== AUTHENTICATION LOGIC ==========
 const path = window.location.pathname;
@@ -223,6 +225,25 @@ if (path.includes('register.html')) {
             const pass = document.getElementById('reg-password').value;
 
             createUserWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    // Kirim email verifikasi setelah sukses dibuat
+                    sendEmailVerification(userCredential.user)
+                        .then(() => {
+                            hideLoading();
+                            alert("Link verifikasi telah dikirim ke email Anda! Silakan cek kotak masuk atau folder spam sebelum login.");
+                            
+                            // Logout otomatis agar tidak langsung masuk sebelum verifikasi
+                            signOut(auth);
+                            window.location.href = 'login.html';
+                        })
+                        .catch((error) => {
+                            hideLoading();
+                            if (errorEl) {
+                                errorEl.style.display = 'block';
+                                errorEl.innerText = 'Gagal mengirim email verifikasi: ' + error.message;
+                            }
+                        });
+                })
                 .catch((error) => {
                     hideLoading();
                     if (errorEl) {
@@ -240,6 +261,7 @@ if (path.includes('register.html')) {
         });
     }
 }
+
 
 // Logika Penyaringan Pencarian Produk & Mod
 const searchInput = document.querySelector('.search-input');
@@ -322,8 +344,11 @@ if (!path.includes('login.html') && !path.includes('register.html')) {
 
     const mods = [
         { id: 101, name: "Alight motion mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "#", img: "am.jpg" },
-        { id: 102, name: "Wink mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "https://sfl.gl/DqVLGXa6", img: "wink.jpg" },
-        { id: 103, name: "PicsArt Pro MOD", price: "GRATIS", desc: "Gold Unlocked, No Ads.", link: "#", img: "picsart.jpg" }
+        { id: 101, name: "hypic mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "#", img: "hypic.jpg" },
+        { id: 101, name: "autorespon wa  mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "https://sfl.gl/y89HAaXM", img: "forwa.jpg" },
+        { id: 101, name: "animein mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "https://sfl.gl/y89HAaXM", img: "animein.jpg" },
+        { id: 101, name: "Wink mod", price: "GRATIS", desc: "Unlock All Skins, God Mode.", link: "https://sfl.gl/DqVLGXa6", img: "Wink.jpg" },
+        { id: 102, name: "PicsArt Pro MOD", price: "GRATIS", desc: "Gold Unlocked, No Ads.", link: "#", img: "picsart.jpg" }
     ];
 
     const testimonials = [
